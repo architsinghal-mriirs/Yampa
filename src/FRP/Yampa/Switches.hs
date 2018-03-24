@@ -84,6 +84,7 @@ module FRP.Yampa.Switches (
     parC,         -- SF a b -> SF [a] [b]
 
     ListSF(..),
+    inertSF,
     dlSwitch,
 
 ) where
@@ -222,7 +223,6 @@ switch (SF {sfTF = tf10}) k = SF {sfTF = tf0}
                     case f1 a of
                         (b, NoEvent) -> (sf, b)
                         (_, Event c) -> sfTF (k c) a
-
 
 -- | Switch with delayed observation.
 --
@@ -897,6 +897,10 @@ dlSwitch' sfs = SF' tf0
 
                         cts   = osfs ++ nsfs
                   in (dlSwitch' cts, bs)
+
+-- | ListSF that never dies or forks.
+inertSF :: SF a b -> ListSF a b
+inertSF sf = ListSF (sf >>> arr (\o -> (o, False, [])))
 
 -- Vim modeline
 -- vim:set tabstop=8 expandtab:
