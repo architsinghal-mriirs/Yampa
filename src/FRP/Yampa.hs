@@ -426,9 +426,14 @@ module FRP.Yampa (
     deltaEncodeBy,        -- :: (a -> a -> Bool) -> DTime -> [a]
                           --    -> (a, [(DTime, Maybe a)])
 
-
     -- * Time transformations
     timeTransform,
+
+
+    FutureSF,
+    evalAtZero,
+    evalAt,
+    evalFuture,
 
     -- * Auxiliary definitions
     --   Reverse function composition and arrow plumbing aids
