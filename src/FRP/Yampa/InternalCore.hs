@@ -183,7 +183,12 @@ module FRP.Yampa.InternalCore (
 
 ) where
 
+#if __GLASGOW_HASKELL__ < 710
+import Control.Applicative (Applicative(..))
+#endif
+
 import Control.Arrow
+
 #if __GLASGOW_HASKELL__ >= 610
 import qualified Control.Category (Category(..))
 #endif
@@ -230,12 +235,6 @@ type DTime = Double     -- [s]
 -- function from 'Time' to value.
 data SF a b = SF {sfTF :: a -> Transition a b}
 
-instance Functor (SF a) where
-  fmap f = (>>^ f)
-
-instance Applicative (SF a) where
-  pure    = arr . const
-  f <*> a = (f &&& a) >>^ uncurry ($)
 
 -- | Signal function in "running" state.
 --
@@ -593,6 +592,17 @@ instance Arrow SF where
 #else
     (>>>)  = compPrim
 #endif
+
+-- | Functor instance for applied SFs.
+instance Functor (SF a) where
+  fmap f = (>>> arr f)
+
+-- | Applicative Functor instance (allows classic-frp style signals and
+-- composition using applicative style).
+instance Applicative (SF a) where
+  pure x = arr (const x)
+  f <*>  x  = (f &&& x) >>> arr (uncurry ($))
+
 
 -- * Lifting.
 
