@@ -133,8 +133,8 @@ library
   hs-source-dirs:
     src
 
-  ghc-options:
-    -O3 -Wall -fno-warn-name-shadowing
+  -- ghc-options:
+  --   -O3 -Wall -fno-warn-name-shadowing
 
   if !impl(ghc >= 8.0)
     build-depends:
@@ -404,6 +404,8 @@ benchmark yampa-bench
   build-depends:
        base
      , criterion
+     , filepath
+     , time
      , Yampa
 
   default-language:
@@ -412,5 +414,5 @@ benchmark yampa-bench
   hs-source-dirs:
     benchmarks
 
-  ghc-options:
-    -O2
+  -- ghc-options:
+  --   -O2
