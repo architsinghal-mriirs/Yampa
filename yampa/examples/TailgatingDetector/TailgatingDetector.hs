@@ -1,7 +1,7 @@
 {-# LANGUAGE Arrows #-}
 -- |
 -- Module      : TailgatingDetector
--- Description : AFRP Expressitivity Test
+-- Description : Yampa Expressitivity Test
 -- Copyright   : Yale University, 2003
 -- Authors     : Henrik Nilsson
 
